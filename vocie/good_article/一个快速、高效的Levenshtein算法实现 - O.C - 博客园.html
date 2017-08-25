@@ -1,0 +1,722 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>一个快速、高效的Levenshtein算法实现 - O.C - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=-wBWg2jMfLNV0-ScpDNxGkoH_gCbdW1yTVJLHzPL7HE1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/LessIsMoreRight/bundle-LessIsMoreRight.css?v=XnHJrmT6UJMtyGfeJjiTUm7BxKWcwdJrxKsGy7z3YZ81"/>
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="/skins/LessIsMoreRight/bundle-LessIsMoreRight-mobile.css?v=qHJjANaihl7o1IFNmGDYMM2LY262zpYzn5es47eo-b81"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/ymind/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/ymind/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/ymind/wlwmanifest.xml"/>
+<script src="//common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'ymind', cb_enable_mathjax=true;var isLogined=false;</script>
+<script src="/bundles/blog-common.js?v=wUUQbLTt-LocHM-6RVSAUwAYdrfA1Lt3ool1ZdiICfI1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/ymind/">老陈的博客</a></div>
+<div class="subtitle">相信奇迹，创造奇迹！</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/ymind/">首页</a></li>
+<li id="nav_newpost"><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/O.C">联系</a></li>
+<li id="nav_rss"><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/ymind/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/ymind/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<!--done-->
+随笔-49&nbsp;
+文章-0&nbsp;
+评论-378&nbsp;
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/ymind/archive/2012/03/27/fast-memory-efficient-Levenshtein-algorithm.html">一个快速、高效的Levenshtein算法实现</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>Levenshtein算法，用于计算两个字符串之间的Levenshtein距离。而<a href="http://baike.baidu.com/view/4123766.htm" target="_blank">Levenshtein</a>距离又称为编辑距离，是指两个字符串之间，由一个转换成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</p>
+<h2>概述</h2>
+<p>Levenshtein距离用来描述两个字符串之间的差异。我在一个网络爬虫程序里面使用这个算法来比较两个网页之间的版本，如果网页的内容有足够多的变动，我便将它更新到我的数据库。</p>
+<h2>说明</h2>
+<p>原来的算法是创建一个大小为StrLen1*StrLen2的矩阵。如果所有字符串加起来是1000个字符那么长的话，那么这个矩阵就会是1M；如果字符串是10000个字符，那么矩阵就是100M。如果元素都是整数（这里是指数字，Int32）的话，那么矩阵就会是4*100M == 400MB这么大，唉&hellip;&hellip;</p>
+<p>现在的算法版本只使用2*StrLen个元素，这使得后面给出的例子成为2*10,000*4 = 80 KB。其结果是，不但内存占用更少，而且速度也变快了！因为这使得内存分配只需要很少的时间来完成。当两个字符串的长度都是1k左右时，新算法的效率是旧算法的两倍！</p>
+<h2>示例</h2>
+<p>原来的版本将会创建一个矩阵[6+1, 5+1]，而我的新算法将会创建两个向量[6+1]（黄色元素）。在这两个算法版本中，字符串的顺序是无关紧要、无所谓的，也就是说，它也可以是矩阵[5+1, 6+1]和两个向量[5+1]。</p>
+<h2>新的算法</h2>
+<h3>步骤</h3>
+<table style="font-size: 13px; background-color: #ff9900;" border="0" cellspacing="1" cellpadding="2" align="center">
+<tbody>
+<tr style="background-color: #fff;"><th bgcolor="#ffffcc">步骤</th><th bgcolor="#ffffcc">说明</th></tr>
+<tr style="background-color: #fff;">
+<td align="center" valign="top">1</td>
+<td>设置n为字符串s的长度。("GUMBO") <br /> 设置m为字符串t的长度。("GAMBOL") <br /> 如果n等于0，返回m并退出。<br /> 如果m等于0，返回n并退出。<br /> 构造两个向量v0[m+1] 和v1[m+1]，串联0..m之间所有的元素。</td>
+</tr>
+<tr style="background-color: #fff;">
+<td align="center" valign="top">2</td>
+<td>初始化 v0 to 0..m。</td>
+</tr>
+<tr style="background-color: #fff;">
+<td align="center" valign="top">3</td>
+<td>检查 s (i from 1 to n) 中的每个字符。</td>
+</tr>
+<tr style="background-color: #fff;">
+<td align="center" valign="top">4</td>
+<td>检查 t (j from 1 to m) 中的每个字符</td>
+</tr>
+<tr style="background-color: #fff;">
+<td align="center" valign="top">5</td>
+<td>如果 s[i] 等于 t[j]，则编辑代价为 0；<br /> 如果 s[i] 不等于 t[j]，则编辑代价为1。</td>
+</tr>
+<tr style="background-color: #fff;">
+<td align="center" valign="top">6</td>
+<td>设置单元v1[j]为下面的最小值之一：<br /> a、紧邻该单元上方+1：v1[j-1] + 1<br /> b、紧邻该单元左侧+1：v0[j] + 1<br /> c、该单元对角线上方和左侧+cost：v0[j-1] + cost</td>
+</tr>
+<tr style="background-color: #fff;">
+<td align="center" valign="top">7</td>
+<td>在完成迭代 (3, 4, 5, 6) 之后，v1[m]便是编辑距离的值。</td>
+</tr>
+</tbody>
+</table>
+<p>本小节将演示如何计算"GUMBO"和"GAMBOL"两个字符串的Levenshtein距离。</p>
+<h4>步骤1、2</h4>
+<table border="1">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td bgcolor="yellow">v0</td>
+<td bgcolor="yellow">v1</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>G</td>
+<td>U</td>
+<td>M</td>
+<td>B</td>
+<td>O</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td bgcolor="yellow">0</td>
+<td bgcolor="yellow">1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>G</td>
+<td bgcolor="yellow">1</td>
+<td bgcolor="yellow">&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>A</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>M</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>B</td>
+<td bgcolor="yellow">4</td>
+<td bgcolor="yellow">&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>O</td>
+<td bgcolor="yellow">5</td>
+<td bgcolor="yellow">&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>L</td>
+<td bgcolor="yellow">6</td>
+<td bgcolor="yellow">&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<h4>步骤3-6，当 i = 1</h4>
+<p>&nbsp;</p>
+<table border="1">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td bgcolor="yellow">v0</td>
+<td bgcolor="yellow">v1</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>G</td>
+<td>U</td>
+<td>M</td>
+<td>B</td>
+<td>O</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td bgcolor="yellow">0</td>
+<td bgcolor="yellow">1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>G</td>
+<td bgcolor="yellow">1</td>
+<td bgcolor="yellow">0</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>A</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">1</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>M</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">2</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>B</td>
+<td bgcolor="yellow">4</td>
+<td bgcolor="yellow">3</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>O</td>
+<td bgcolor="yellow">5</td>
+<td bgcolor="yellow">4</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>L</td>
+<td bgcolor="yellow">6</td>
+<td bgcolor="yellow">5</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<h4>步骤3-6，当 i = 2</h4>
+<table border="1">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td bgcolor="yellow">v0</td>
+<td bgcolor="yellow">v1</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>G</td>
+<td>U</td>
+<td>M</td>
+<td>B</td>
+<td>O</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>0</td>
+<td bgcolor="yellow">1</td>
+<td bgcolor="yellow">2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>G</td>
+<td>1</td>
+<td bgcolor="yellow">0</td>
+<td bgcolor="yellow">1</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>A</td>
+<td>2</td>
+<td bgcolor="yellow">1</td>
+<td bgcolor="yellow">1</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>M</td>
+<td>3</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">2</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>B</td>
+<td>4</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">3</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>O</td>
+<td>5</td>
+<td bgcolor="yellow">4</td>
+<td bgcolor="yellow">4</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>L</td>
+<td>6</td>
+<td bgcolor="yellow">5</td>
+<td bgcolor="yellow">5</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<h4>步骤3-6，当 i = 3</h4>
+<p>&nbsp;</p>
+<table border="1">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td bgcolor="yellow">v0</td>
+<td bgcolor="yellow">v1</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>G</td>
+<td>U</td>
+<td>M</td>
+<td>B</td>
+<td>O</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>0</td>
+<td>1</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>G</td>
+<td>1</td>
+<td>0</td>
+<td bgcolor="yellow">1</td>
+<td bgcolor="yellow">2</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>A</td>
+<td>2</td>
+<td>1</td>
+<td bgcolor="yellow">1</td>
+<td bgcolor="yellow">2</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>M</td>
+<td>3</td>
+<td>2</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">1</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>B</td>
+<td>4</td>
+<td>3</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">2</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>O</td>
+<td>5</td>
+<td>4</td>
+<td bgcolor="yellow">4</td>
+<td bgcolor="yellow">3</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>L</td>
+<td>6</td>
+<td>5</td>
+<td bgcolor="yellow">5</td>
+<td bgcolor="yellow">4</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<h4>步骤3-6，当 i = 4</h4>
+<p>&nbsp;</p>
+<table border="1">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td bgcolor="yellow">v0</td>
+<td bgcolor="yellow">v1</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>G</td>
+<td>U</td>
+<td>M</td>
+<td>B</td>
+<td>O</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>G</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">3</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>A</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">3</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>M</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td bgcolor="yellow">1</td>
+<td bgcolor="yellow">2</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>B</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">1</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>O</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">2</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>L</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+<td bgcolor="yellow">4</td>
+<td bgcolor="yellow">3</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<h4>步骤3-6，当 i = 5</h4>
+<p>&nbsp;</p>
+<table border="1">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td bgcolor="yellow">v0</td>
+<td bgcolor="yellow">v1</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>G</td>
+<td>U</td>
+<td>M</td>
+<td>B</td>
+<td>O</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td bgcolor="yellow">4</td>
+<td bgcolor="yellow">5</td>
+</tr>
+<tr>
+<td>G</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">4</td>
+</tr>
+<tr>
+<td>A</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">4</td>
+</tr>
+<tr>
+<td>M</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">3</td>
+</tr>
+<tr>
+<td>B</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td bgcolor="yellow">1</td>
+<td bgcolor="yellow">2</td>
+</tr>
+<tr>
+<td>O</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td bgcolor="yellow">2</td>
+<td bgcolor="yellow">1</td>
+</tr>
+<tr>
+<td>L</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td bgcolor="yellow">3</td>
+<td bgcolor="yellow">2</td>
+</tr>
+</tbody>
+</table>
+<h4>步骤7</h4>
+<p>编辑距离就是矩阵右下角的值，v1[m] == 2。由"GUMBO"变换为"GAMBOL"的过程对于我来说是很只管的，即通过将"A"替换为"U"，并在末尾追加"L"这样子（实际上替换的过程是由移除和插入两个操作组合而成的）。</p>
+<h2>改良</h2>
+<p>如果您确信你的字符串永远不会超过2^16（65536）个字符，那么你可以使用ushort来表示而不是int，如果字符串少于2^8个，还可以使用byte。我觉得这个算法用非托管代码实现的话可能会更快，但我没有试过。</p>
+<h2>参考文献</h2>
+<ul>
+<li><a href="http://www.merriampark.com/ld.htm" target="_blank">Levenshtein Distance, in Three Flavors</a></li>
+</ul>
+<hr />
+<p>下载代码请前往原文：<a href="http://www.codeproject.com/Articles/13525/Fast-memory-efficient-Levenshtein-algorithm">http://www.codeproject.com/Articles/13525/Fast-memory-efficient-Levenshtein-algorithm</a></p>
+<p>&nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2012-03-27 09:00</span> <a href='http://www.cnblogs.com/ymind/'>O.C</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="https://i.cnblogs.com/EditPosts.aspx?postid=2418507" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2418507);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=108995,cb_entryId=2418507,cb_blogApp=currentBlogApp,cb_blogUserGuid='5e43462c-7759-e111-aa3f-842b2b196315',cb_entryCreatedDate='2012/3/27 9:00:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='cnblogs_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='cnblogs_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2017 O.C
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+</body>
+</html>

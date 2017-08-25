@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 7]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<!--[if !IE]><!--> <html> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+  <!-- Start of Baidu Transcode -->
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="MobileOptimized" content="width"/>
+  <meta name="HandheldFriendly" content="true"/>
+  <meta name="mobile-agent" content="format=html5;url=http://www.jianshu.com/p/89c47e6c3f16">
+  <!-- End of Baidu Transcode -->
+
+    <meta name="description"  content="语音识别: Getting Started!首先,我们要知道语音的产生过程 状态:由肺产生向外的气流，完全放松时声带张开，就是平时的呼吸。如果声带一张一合（振动）形成周期性的脉冲气流。这个脉冲气流的周期称之为——基音周期（题主所言因音色不同导致的频率不同，事实上音色的大多是泛频上的差异，建立在基频之上，这个基频就是基音周期了，泛频可以忽略）。当然啦，这只是在发浊音（b,d,v...）时才会有...">
+
+  <meta name="360-site-verification" content="604a14b53c6b871206001285921e81d8" />
+  <meta property="wb:webmaster" content="294ec9de89e7fadb" />
+  <meta property="qc:admins" content="104102651453316562112116375" />
+  <meta property="qc:admins" content="11635613706305617" />
+  <meta property="qc:admins" content="1163561616621163056375" />
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4" />
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI" />
+  <meta http-equiv="mobile-agent" content="format=html5; url=http://www.jianshu.com/p/89c47e6c3f16">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="简书">
+
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/15467396">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="python数据建模分析 - 语音识别" property="twitter:title">
+  <meta content="语音识别: Getting Started!首先,我们要知道语音的产生过程 状态:由肺产生向外的气流，完全放松时声带张开，就是平时的呼吸。如果声带一张一合（振动）形成周期性的脉冲气流。这个脉冲气流的周期称之为——基音周期（题主所言因音色不同导致的频率不同，事实上音色的大多是泛频上的差异，建立在基频之上，这个基频就是基音周期了，泛频可以忽略）。当然啦，这只是在发浊音（b,d,v...）时才会有，当发出清音（p,t,f...）时声带不振动，但是会处于紧绷状态，当气流涌出时会在声带产生湍流。清音和浊音是音素的两大类。接下来脉冲气流/湍流到达声道，由声道对气流进行调制，形成不同的音素。多个音素组..." property="twitter:description">
+  <meta content="http://www.jianshu.com/p/89c47e6c3f16" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="python数据建模分析 - 语音识别">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://www.jianshu.com/p/89c47e6c3f16">
+  <meta property="og:description" content="语音识别: Getting Started!首先,我们要知道语音的产生过程 状态:由肺产生向外的气流，完全放松时声带张开，就是平时的呼吸。如果声带一张一合（振动）形成周期性的脉冲气流。这个脉冲气...">
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/15467396" />
+  <meta property="al:ios:app_store_id" content="888237539" />
+  <meta property="al:ios:app_name" content="简书" />
+
+  <meta property="al:android:url" content="jianshu://notes/15467396" />
+  <meta property="al:android:package" content="com.jianshu.haruki" />
+  <meta property="al:android:app_name" content="简书" />
+  <!-- End -->
+
+
+    <title>python数据建模分析 - 语音识别 - 简书</title>
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="/UNnxUytKmkbAggyFRC6VHCDS2f8k73uytdvgwdK4y7NUaHIBnMQiX7i8QrGL1HmDGGEvpgj4U5PURtS7qsKrQ==" />
+
+  <link rel="stylesheet" media="all" href="//cdn2.jianshu.io/assets/web-ede22c22e919d3f78461.css" />
+  
+  <link rel="stylesheet" media="all" href="//cdn2.jianshu.io/assets/web/pages/notes/show/entry-e8b09a98981a82032b82.css" />
+
+  <link href="//cdn2.jianshu.io/assets/favicons/favicon-783beb88ed621ceab614de960376ac0c.ico" rel="icon">
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/57-47624b2e2161e8eb144462c85db0a5ff.png" sizes="57x57" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/72-c00cde7cf98fc49e50cbb3ee1dcd5804.png" sizes="72x72" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/76-e8af0bdeaf1ba31e303b1fde8b5e66c4.png" sizes="76x76" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/114-f4c78569bbf1977e8382a5fd90c9237a.png" sizes="114x114" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/120-cf10c3711dba269522743729efe66bbc.png" sizes="120x120" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/152-7bd60457b5f3ecbf1343f0e6241be4f8.png" sizes="152x152" />
+</head>
+
+  <body lang="zh-CN" class="reader-black-font">
+    <!-- 全局顶部导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="width-limit">
+    <!-- 左上方 Logo -->
+    <a class="logo" href="/"><img src="//cdn2.jianshu.io/assets/web/logo-58fd04f6f0de908401aa561cda6a0688.png" alt="Logo" /></a>
+
+    <!-- 右上角 -->
+      <!-- 未登录显示登录/注册/写文章 -->
+      <a class="btn write-btn" target="_blank" href="/writer#/">
+        <i class="iconfont ic-write"></i>写文章
+</a>      <a class="btn sign-up" href="/sign_up">注册</a>
+      <a class="btn log-in" href="/sign_in">登录</a>
+
+    <!-- 如果用户登录，显示下拉菜单 -->
+
+    <div id="view-mode-ctrl">
+    </div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+            <li class="">
+              <a href="/">
+                <span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i>
+</a>            </li>
+            <li class="">
+              <a class="app-download-btn" href="/apps"><span class="menu-text">下载App</span><i class="iconfont ic-navigation-download menu-icon"></i></a>
+            </li>
+          <li class="search">
+            <form target="_blank" action="/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+              <input type="text" name="q" id="q" value="" autocomplete="off" placeholder="搜索" class="search-input" />
+              <a class="search-btn" href="javascript:void(null)"><i class="iconfont ic-search"></i></a>
+</form>          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    
+<div class="note">
+  <div class="post">
+    <div class="article">
+        <h1 class="title">python数据建模分析 - 语音识别</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="/u/22a3ef9079b1">
+            <img src="//upload.jianshu.io/users/upload_avatars/5309010/65117c99-ba39-4867-9792-3e13817fd820.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/144/h/144" alt="144" />
+</a>          <div class="info">
+            <span class="tag">作者</span>
+            <span class="name"><a href="/u/22a3ef9079b1">语落心生</a></span>
+            <!-- 关注用户按钮 -->
+            <div data-author-follow-button></div>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="最后编辑于 2017.08.07 11:34">2017.08.07 10:21*</span>
+              <span class="wordage">字数 1285</span>
+            </div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+        <!-- -->
+
+        <!-- 文章内容 -->
+        <div data-note-content class="show-content">
+          <p><a href="http://www.cnblogs.com/weidiao/p/6722922.html" target="_blank">语音识别</a>:</p>
+<blockquote>
+<p><strong>Getting Started!</strong>首先,我们要知道语音的产生过程</p>
+</blockquote>
+<div class="image-package">
+<img src="//upload-images.jianshu.io/upload_images/5309010-b076fb16b02fd4da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/5309010-b076fb16b02fd4da.png?imageMogr2/auto-orient/strip" alt="voice.png"><br><div class="image-caption">voice.png</div>
+</div>
+<blockquote>
+<p>状态:由肺产生向外的气流，完全放松时声带张开，就是平时的呼吸。如果声带一张一合（振动）形成周期性的脉冲气流。这个脉冲气流的周期称之为——基音周期（题主所言因音色不同导致的频率不同，事实上音色的大多是泛频上的差异，建立在基频之上，这个基频就是基音周期了，泛频可以忽略）。当然啦，这只是在发浊音（b,d,v...）时才会有，当发出清音（p,t,f...）时声带不振动，但是会处于紧绷状态，当气流涌出时会在声带产生湍流。清音和浊音是音素的两大类。接下来脉冲气流/湍流到达声道，由声道对气流进行调制，形成不同的音素。多个音素组成一个音节（就汉语而言是[声母]+韵母）。如果没学过信号系统那就想像一下平舌音和翘舌音，z和zh发声时肺和喉的状态都一样，只是舌头动作不一样，发出的声音也就不一样了，这就算是简单的调制。从而声音的波形会发生一些变化。这个波形，就是以后分析所需要的数据。</p>
+</blockquote>
+<blockquote>
+<p><strong><a href="http://www.cnblogs.com/weidiao/p/6722922.html" target="_blank">标识声音</a></strong>的图像有以下三种</p>
+</blockquote>
+<ul>
+<li>频谱图</li>
+<li>时谱图</li>
+<li>语谱图</li>
+</ul>
+<blockquote>
+<p>以千里码 <a href="http://www.qlcoder.com/task/762c" target="_blank">语音识别-1</a>为例,将Mp3文件转换成wav，分析其<strong>频谱图</strong><br>
+参照<a href="http://bigsec.net/b52/scipydoc/wave_pyaudio.html#wave" target="_blank">wav使用手册</a>，让我们介绍一下wav文件</p>
+</blockquote>
+<blockquote>
+<p>WAV是Microsoft开发的一种声音文件格式，虽然它支持多种压缩格式，不过它通常被用来保存未压缩的声音数据（PCM脉冲编码调制)。WAV有三个重要的参数：声道数、取样频率和量化位数。</p>
+</blockquote>
+<ul>
+<li>声道数：可以是单声道或者是双声道</li>
+<li>采样频率：一秒内对声音信号的采集次数，常用的有8kHz, 16kHz, 32kHz, 48kHz, 11.025kHz, 22.05kHz, 44.1kHz</li>
+<li>量化位数：用多少bit表达一次采样所采集的数据，通常有8bit、16bit、24bit和32bit等几种</li>
+</ul>
+<blockquote>
+<p>1.<em>读入二进制音频流数据<a href="http://bigsec.net/b52/scipydoc/wave_pyaudio.html" target="_blank">流程</a></em></p>
+</blockquote>
+<ul>
+<li>对于一个音频实例wf而言，通过调用它的方法读取WAV文件的格式和数据:getnchannels, getsampwidth, getframerate, getnframes等方法可以单独返回WAV文件的特定的信息。</li>
+<li>readframes：读取声音数据，传递一个参数指定需要读取的长度（以取样点为单位），readframes返回的是二进制数据</li>
+</ul>
+<p>PS:注意需要使用"rb"(二进制模式)打开文件</p>
+<pre><code>import wave
+import pyaudio
+import numpy
+from matplotlib import pylab
+
+
+#打开wav文档，文件路径根据需要修改
+wf = wave.open("F:\\work\\war.wav","rb")
+
+#创建PyAudio对象
+p = pyaudio.PyAudio()
+
+
+class Audio(object):
+
+    def __init__(self):
+        self.channels = wf.getnchannels()
+        # 返回音频通道数
+        self.rate = wf.getframerate()
+        # 返回采样频率。
+        self.format = p.get_format_from_width(wf.getsampwidth())
+        # 返回指定宽度的PortAudio格式常量。
+        self.stream = p.open(format=self.format,channels=self.channels,rate=self.rate,output=True)
+        # 使用所需的音频参数在所需设备上打开一个流
+        self.nframes = wf.getnframes()
+        # 返回音频帧数
+        self.collect_point_num = 44100
+        # 采样点数，修改采样点数和起始位置进行不同位置和长度的音频波形分析
+        self.start = 0
+        # 开始采样位置
+    def read_data(self):
+        self.str_data = wf.readframes(self.nframes)
+        # 读取声音数据，传递一个参数指定需要读取的长度（以取样点为单位），readframes返回的是二进制数据（即bytes数组)
+        # print(self.str_data)
+        wf.close()
+        #关闭媒体流
+if __name__ == '__main__':
+    aduio = Audio()
+    aduio.read_data()
+</code></pre>
+<p>python output</p>
+<div class="image-package">
+<img src="//upload-images.jianshu.io/upload_images/5309010-829972b60666615f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/5309010-829972b60666615f.jpg?imageMogr2/auto-orient/strip" alt="aduio.jpg"><br><div class="image-caption">aduio.jpg</div>
+</div>
+<blockquote>
+<p>2.<em>生成的流媒体字节数组计算出每个取样的时间</em></p>
+</blockquote>
+<ul>
+<li>将读取的二进制数据转换为一个可以计算的数组</li>
+<li>通过fromstring函数将字符串转换为数组，通过其参数dtype指定转换后的数据格式，由于我们的声音格式是以两个字节表示一个取样值，因此采用short数据类型转换。现在我们得到的wave_data是一个一维的short类型的数组，但是因为我们的声音文件是双声道的，因此它由左右两个声道的取样交替构成：LRLRLRLR....LR（L表示左声道的取样值，R表示右声道取样值）'</li>
+<li>由<a href="http://blog.csdn.net/huwei2003/article/details/55100650" target="_blank">帧率</a>的计算公式:<br>
+<em>采样率 = 每秒中的采样频率/每秒中的采样点数 帧率(fps) =1 /采样率</em>
+</li>
+<li>将波形数据转换为数组</li>
+<li>通过取样点数和取样频率计算出每个取样的时间</li>
+</ul>
+<pre><code>    def convrt_data(self):
+        self.df = self.rate / (self.collect_point_num - 1)
+        # 根据总平均法使用全局帧数除以全局时间，以求出帧率
+    def Data_collection(self):
+        wave_data = numpy.fromstring(self.str_data,dtype=numpy.short)
+        # 根据声道数和量化单位，将读取的二进制数据转换为一个可以计算的数组
+
+        wave_data.shape = -1, 2
+        # -1代表左声道,2代表右声道
+        # 通过fromstring函数将字符串转换为数组，通过其参数dtype指定转换后的数据格式，由于我们的声音格式是以两个字节表示一个取样值，
+        # 因此采用short数据类型转换。现在我们得到的wave_data是一个一维的short类型的数组，但是因为我们的声音文件是双声道的，
+        # 因此它由左右两个声道的取样交替构成：LRLRLRLR....LR（L表示左声道的取样值，R表示右声道取样值）。修改wave_data的sharp之后：
+
+        # 将wave_data数组改为2列，行数自动匹配。在修改shape的属性时，需使得数组的总长度不变。v
+        wave_data = wave_data.T
+        # 将波形数据转换为数组
+        freq = [self.df*self.collect_point_num for n in range(0,self.collect_point_num)]
+        # 通过取样点数和取样频率计算出每个取样的时间
+</code></pre>
+<blockquote>
+<p><em>3.划分采样位置，建立频谱图坐标系,根据采样时间标记采样点在频谱图上的位置</em></p>
+</blockquote>
+<ul>
+<li>wave_data2保存声音字节数组转置后的结果,为列数为1存储的数组</li>
+<li>固定第一位，划分第二维区间从0一直扫描到行尾</li>
+<li>避免波形字节数组过长,利用<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html" target="_blank">numpy.fft.fft</a>对压缩为1/2的波形字节数组进行<a href="http://www.voidcn.com/blog/wxq_wuxingquan/article/p-6351347.html" target="_blank">快速傅里叶变换</a>,常规显示采样频率一半的频谱</li>
+<li>设定如果每个取样点的取样时间大于4000ms，分隔单位为10的波形数组显示</li>
+</ul>
+<pre><code> def Data_collection(self):
+        wave_data = numpy.fromstring(self.str_data,dtype=numpy.short)
+        # 根据声道数和量化单位，将读取的二进制数据转换为一个可以计算的数组
+
+        wave_data.shape = -1.2
+        # -1代表左声道,2代表右声道
+        # 通过fromstring函数将字符串转换为数组，通过其参数dtype指定转换后的数据格式，由于我们的声音格式是以两个字节表示一个取样值，
+        # 因此采用short数据类型转换。现在我们得到的wave_data是一个一维的short类型的数组，但是因为我们的声音文件是双声道的，
+        # 因此它由左右两个声道的取样交替构成：LRLRLRLR....LR（L表示左声道的取样值，R表示右声道取样值）。修改wave_data的sharp之后：
+
+        # 将wave_data数组改为2列，行数自动匹配。在修改shape的属性时，需使得数组的总长度不变。v
+        wave_data = wave_data.T
+        # 将波形数据转换为数组
+        freq = [self.df*self.collect_point_num for n in range(0,self.collect_point_num)]
+        # 通过取样点数和取样频率计算出每个取样的时间
+        wave_data2 = wave_data[0][self.start:self.start+self.collect_point_num]
+        c = numpy.fft.fft(wave_data2)*2/self.collect_point_num
+        # 常规显示采样频率一半的频谱
+        d = int(len(c)/2)
+        while freq[0] &gt; 4000:
+            d -= 10
+            pylab.plot(freq[:d-1],abs(c[:d-1]),"r")
+            pylab.show()
+</code></pre>
+<p>python console:频谱的时间段划分似乎造成了误差,导致统计结果趋于集中</p>
+<div class="image-package">
+<img src="//upload-images.jianshu.io/upload_images/5309010-a14591896572cc94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/5309010-a14591896572cc94.png?imageMogr2/auto-orient/strip" alt="fft.png"><br><div class="image-caption">fft.png</div>
+</div>
+<p><em>Test1</em>:打印波形字节数组长度以及每个采样点采样花费的时间</p>
+<pre><code> def Data_collection(self):
+        wave_data = numpy.fromstring(self.str_data,dtype=numpy.short)
+        # 根据声道数和量化单位，将读取的二进制数据转换为一个可以计算的数组
+
+        wave_data.shape = -1, 2
+        # -1代表左声道,2代表右声道
+        # 通过fromstring函数将字符串转换为数组，通过其参数dtype指定转换后的数据格式，由于我们的声音格式是以两个字节表示一个取样值，
+        # 因此采用short数据类型转换。现在我们得到的wave_data是一个一维的short类型的数组，但是因为我们的声音文件是双声道的，
+        # 因此它由左右两个声道的取样交替构成：LRLRLRLR....LR（L表示左声道的取样值，R表示右声道取样值）。修改wave_data的sharp之后：
+
+        # 将wave_data数组改为2列，行数自动匹配。在修改shape的属性时，需使得数组的总长度不变。v
+        wave_data = wave_data.T
+        # 将波形数据转换为数组
+        freq = [self.df*self.collect_point_num for n in range(0,self.collect_point_num)]
+        print(freq)
+        # 通过取样点数和取样频率计算出每个取样的时间
+        wave_data2 = wave_data[0][self.start:self.start+self.collect_point_num]
+        c = numpy.fft.fft(wave_data2)*2/self.collect_point_num
+        d = int(len(c)/2)
+        print(d)
+</code></pre>
+<p>python console</p>
+<div class="image-package">
+<img src="//upload-images.jianshu.io/upload_images/5309010-224c05fc5eedac2d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/5309010-224c05fc5eedac2d.jpg?imageMogr2/auto-orient/strip" alt="print.jpg"><br><div class="image-caption">print.jpg</div>
+</div>
+<p><em>Test2</em>: 原来是设定的采样时间过小，修改统计条件为 freq[0] &gt; 44101</p>
+<pre><code>    def Data_collection(self):
+        wave_data = numpy.fromstring(self.str_data,dtype=numpy.short)
+        # 根据声道数和量化单位，将读取的二进制数据转换为一个可以计算的数组
+
+        wave_data.shape = -1, 2
+        # -1代表左声道,2代表右声道
+        # 通过fromstring函数将字符串转换为数组，通过其参数dtype指定转换后的数据格式，由于我们的声音格式是以两个字节表示一个取样值，
+        # 因此采用short数据类型转换。现在我们得到的wave_data是一个一维的short类型的数组，但是因为我们的声音文件是双声道的，
+        # 因此它由左右两个声道的取样交替构成：LRLRLRLR....LR（L表示左声道的取样值，R表示右声道取样值）。修改wave_data的sharp之后：
+
+        # 将wave_data数组改为2列，行数自动匹配。在修改shape的属性时，需使得数组的总长度不变。v
+        wave_data = wave_data.T
+        # 将波形数据转换为数组
+        freq = [self.df*self.collect_point_num for n in range(0,self.collect_point_num)]
+        print(freq)
+        # 通过取样点数和取样频率计算出每个取样的时间
+        wave_data2 = wave_data[0][self.start:self.start+self.collect_point_num]
+        c = numpy.fft.fft(wave_data2)*2/self.collect_point_num
+        d = int(len(c)/2)
+        print(d)
+
+        while freq[0] &gt; 44101:
+            d -= 0.1
+            pylab.plot(freq[:d-1],abs(c[:d-1]),"r")
+            pylab.show()
+</code></pre>
+<p>python console采样的分布过于密集，不适合用频谱图进行统计</p>
+<br>
+<div class="image-package">
+<img src="//upload-images.jianshu.io/upload_images/5309010-c91994b31351a9b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/5309010-c91994b31351a9b3.png?imageMogr2/auto-orient/strip" alt="pinpu.png"><br><div class="image-caption">pinpu.png</div>
+</div>
+<p><em>Test3</em>:使用波形图，分别用subplot211与subplot212标识左右声道的波形</p>
+<pre><code>import wave
+import pyaudio
+import numpy
+from matplotlib import pylab
+
+
+#打开wav文档，文件路径根据需要修改
+wf = wave.open("F:\\work\\war.wav","rb")
+
+#创建PyAudio对象
+p = pyaudio.PyAudio()
+
+
+class Audio(object):
+
+    def __init__(self):
+        self.channels = wf.getnchannels()
+        # 返回音频通道数
+        self.rate = wf.getframerate()
+        # 返回采样频率。
+        self.format = p.get_format_from_width(wf.getsampwidth())
+        # 返回指定宽度的PortAudio格式常量。
+        self.stream = p.open(format=self.format,channels=self.channels,rate=self.rate,output=True)
+        # 使用所需的音频参数在所需设备上打开一个流
+        self.nframes = wf.getnframes()
+        # 返回音频帧数
+        self.collect_point_num = 44100
+        # 采样点数，修改采样点数和起始位置进行不同位置和长度的音频波形分析
+        self.start = 0
+        # 开始采样位置
+    def read_data(self):
+        self.str_data = wf.readframes(self.nframes)
+        # 读取声音数据，传递一个参数指定需要读取的长度（以取样点为单位），readframes返回的是二进制数据（即bytes数组)
+        # print(self.str_data)
+        wf.close()
+
+    def convert_data(self):
+        self.df = self.rate / (self.collect_point_num - 1)
+        # print(self.df)
+        # 使用全局采样频率除以全局采样点数，以求出帧率
+    def Data_collection(self):
+        wave_data = numpy.fromstring(self.str_data,dtype=numpy.short)
+        # 根据声道数和量化单位，将读取的二进制数据转换为一个可以计算的数组
+
+        wave_data.shape = -1, 2
+        # -1代表左声道,2代表右声道
+        # 通过fromstring函数将字符串转换为数组，通过其参数dtype指定转换后的数据格式，由于我们的声音格式是以两个字节表示一个取样值，
+        # 因此采用short数据类型转换。现在我们得到的wave_data是一个一维的short类型的数组，但是因为我们的声音文件是双声道的，
+        # 因此它由左右两个声道的取样交替构成：LRLRLRLR....LR（L表示左声道的取样值，R表示右声道取样值）。修改wave_data的sharp之后：
+
+        # 将wave_data数组改为2列，行数自动匹配。在修改shape的属性时，需使得数组的总长度不变。v
+        wave_data = wave_data.T
+        # 将波形数据转换为数组
+        freq = [self.df*self.collect_point_num for n in range(0,self.collect_point_num)]
+        # print(freq)
+        # 通过取样点数和取样频率计算出每个取样的时间
+        wave_data2 = wave_data[0][self.start:self.start+self.collect_point_num]
+        c = numpy.fft.fft(wave_data2)*2/self.collect_point_num
+        d = int(len(c)/2)
+        # print(d)
+
+        while freq[0] &gt; 44101:
+            d -= 20
+            pylab.plot(freq[:d-1],c[:d-1],"r")
+            pylab.show()
+
+
+    def wavread(self):
+        wavfile = wf
+        params = wavfile.getparams()
+        framesra, frameswav = params[2], params[3]
+        datawav = wavfile.readframes(frameswav)
+        wavfile.close()
+        datause = numpy.fromstring(datawav, dtype=numpy.short)
+        datause.shape = -1, 2
+        datause = datause.T
+        time = numpy.arange(0, frameswav) * (1.0 / framesra)
+        return datause, time
+
+
+    def work(self):
+        self.read_data()
+        self.convert_data()
+        self.Data_collection()
+
+if __name__ == '__main__':
+    aduio = Audio()
+    # aduio.work()
+
+    wavdata, wavtime = aduio.wavread()
+    pylab.title("Night.wav's Frames")
+    pylab.subplot(211)
+    pylab.plot(wavtime, wavdata[0], color='green')
+    pylab.subplot(212)
+    pylab.plot(wavtime, wavdata[1])
+    pylab.show()
+
+</code></pre>
+<p>python console</p>
+<div class="image-package">
+<img src="//upload-images.jianshu.io/upload_images/5309010-9e955163ee6c02b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/5309010-9e955163ee6c02b4.png?imageMogr2/auto-orient/strip" alt="wave.png"><br><div class="image-caption">wave.png</div>
+</div>
+
+        </div>
+        <!--  -->
+
+        <div class="show-foot">
+          <a class="notebook" href="/nb/11026295">
+            <i class="iconfont ic-search-notebook"></i> <span>编程之旅</span>
+</a>          <div class="copyright" data-toggle="tooltip" data-html="true" data-original-title="转载请联系作者获得授权，并标注“简书作者”。">
+            © 著作权归作者所有
+          </div>
+          <div class="modal-wrap" data-report-note>
+            <a id="report-modal">举报文章</a>
+          </div>
+        </div>
+    </div>
+
+    <!-- 文章底部作者信息 -->
+      <div class="follow-detail">
+        <div class="info">
+          <a class="avatar" href="/u/22a3ef9079b1">
+            <img src="//upload.jianshu.io/users/upload_avatars/5309010/65117c99-ba39-4867-9792-3e13817fd820.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/144/h/144" alt="144" />
+</a>          <div data-author-follow-button></div>
+          <a class="title" href="/u/22a3ef9079b1">语落心生</a>
+        </div>
+          <div class="signature">话语在无悔的抉择中落下,为逐梦时尤然心生
+
+github仓库地址:https://github.com/complone</div>
+      </div>
+
+      <div class="support-author"></div>
+
+    <div class="meta-bottom">
+      <div class="btn like-group"></div>
+      <div class="share-group">
+        <a class="share-circle" data-action="weixin-share" data-toggle="tooltip" data-original-title="分享到微信">
+          <i class="iconfont ic-wechat"></i>
+        </a>
+        <a class="share-circle" data-action="weibo-share" data-toggle="tooltip" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;http://cwb.assets.jianshu.io/notes/images/15467396/weibo/image_fdd6539c74f5.jpg&#39;, &#39;推荐 语落心生 的文章《python数据建模分析 - 语音识别》（ 分享自 @简书 ）&#39;,&#39;http://www.jianshu.com/p/89c47e6c3f16?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-original-title="分享到微博">
+          <i class="iconfont ic-weibo"></i>
+        </a>
+          <a class="share-circle" data-toggle="tooltip" href="http://cwb.assets.jianshu.io/notes/images/15467396/weibo/image_fdd6539c74f5.jpg" target="_blank" data-original-title="下载长微博图片">
+            <i class="iconfont ic-picture"></i>
+          </a>
+        <a class="share-circle more-share" tabindex="0" data-toggle="popover" data-placement="top" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content='
+          <ul class="share-list">
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;http://www.jianshu.com/p/89c47e6c3f16?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 语落心生 的文章《python数据建模分析 - 语音识别》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-zone"></i><span>分享到QQ空间</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;http://www.jianshu.com/p/89c47e6c3f16?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 语落心生 的文章《python数据建模分析 - 语音识别》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-twitter"></i><span>分享到Twitter</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=http://www.jianshu.com/p/89c47e6c3f16?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-facebook"></i><span>分享到Facebook</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;http://www.jianshu.com/p/89c47e6c3f16?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-google"></i><span>分享到Google+</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;http://www.jianshu.com/p/89c47e6c3f16?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;python数据建模分析 - 语音识别&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><i class="social-icon-sprite social-icon-douban"></i><span>分享到豆瓣</span></a></li>
+          </ul>
+        '>更多分享</a>
+      </div>
+    </div>
+    <div id="vue_comment"></div>
+  </div>
+
+  <div class="vue-side-tool"></div>
+</div>
+<div class="note-bottom">
+  <div class="js-included-collections"></div>
+  <div data-vcomp="recommended-notes" data-lazy="1.5" data-note-id="15467396"></div>
+</div>
+
+    <script type="application/json" data-name="page-data">{"user_signed_in":false,"locale":"zh-CN","os":"windows","read_mode":"day","read_font":"font2","note_show":{"is_author":false,"is_following_author":false,"is_liked_note":false,"uuid":"fb5461cd-1dd2-4488-9821-0ef8a76c5206"},"note":{"id":15467396,"slug":"89c47e6c3f16","user_id":5309010,"notebook_id":11026295,"commentable":true,"likes_count":0,"views_count":44,"public_wordage":1285,"comments_count":0,"total_rewards_count":0,"is_author":false,"author":{"nickname":"语落心生","total_wordage":38205,"followers_count":10,"total_rewards_count":11}}}</script>
+    
+    <script src="//cdn2.jianshu.io/assets/babel-polyfill-8053f0c4c81c27b7aff2.js"></script>
+    <script src="//cdn2.jianshu.io/assets/web-base-193c8344ca5dda114ee0.js"></script>
+<script src="//cdn2.jianshu.io/assets/web-ede22c22e919d3f78461.js"></script>
+    
+    <script src="//cdn2.jianshu.io/assets/web/pages/notes/show/entry-e8b09a98981a82032b82.js"></script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-35169517-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+  </body>
+</html>
