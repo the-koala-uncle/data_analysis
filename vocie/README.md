@@ -22,7 +22,6 @@ journal
 直接把波形读取出来，曲线形式
 先滤波，然后进行波形比对，这里我用的Levenshtein算法+EPD端点检测算法。
 
-根据相似度计算公式：1 – 1 / Math.max(“stecai1”.length, “stecai2”.length) =0.857
 
 
 point
