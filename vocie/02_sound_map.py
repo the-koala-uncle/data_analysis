@@ -5,7 +5,7 @@ import pylab
 import os
 os.chdir(os.getcwd())
 #打开WAV文档，文件路径根据需要做修改
-wf = wave.open("01.wav", "rb")
+wf = wave.open("E:\\workspace\\python\\recently\\语音识别\\音频文件\\1.wav", "rb")
 #创建PyAudio对象
 p = pyaudio.PyAudio()
 stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
@@ -17,6 +17,7 @@ framerate = wf.getframerate()
 #读取完整的帧数据到str_data中，这是一个string类型的数据
 str_data = wf.readframes(nframes)
 wf.close()
+
 #将波形数据转换为数组
 # A new 1-D array initialized from raw binary or text data in a string.
 wave_data = numpy.fromstring(str_data, dtype=numpy.short)
